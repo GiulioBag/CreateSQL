@@ -1,13 +1,7 @@
 NomeColonna,Key,Tipo,Lunghezza
-COD_ABI,True,varchar,5
-COD_CONTRATTO,True,varchar,34
-COD_COMPAGNIA,False,varchar,5
-COD_POLIZZA,False,varchar,11
-COD_PRODOTTO,False,varchar,5
-COD_TARIFFA_ENTE,False,varchar,5
-COD_PRODOTTO_INTERNO,False,varchar,20
-COD_GARANZIA,False,varchar,5
-COD_FONDO,True,varchar,5
-DAT_AVVALORAMENTO,False,date,20
-NUM_QUOTE_OPERAZIONE,False,int,8
-IMP_CONTROVALORE_QUOTE,False,numeric,"[20, 6]"
+COD_ABI,False,varchar,5
+ANNO_MESE_SALDO,False,numeric,8
+COD_PRODOTTO,False,varchar,12
+COD_DIVISA_TRATTAZIONE,False,varchar,3
+IMP_VALORE_NOMINALE,False,numeric,8
+SUM_of_IMP_SALDO_CONTABILE_TITOL,False,numeric,"[20, 3]"

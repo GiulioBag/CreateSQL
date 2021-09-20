@@ -40,7 +40,7 @@ class DfMaker:
         # Controllo che nella prima dello sheet ci siano le colonne volute
 
         code, df = self.check_columns()
-        if code == 1:
+        if code == 0:
             return df
 
         # Nella prima riga dello sheet non sono state trovate le colonne di interesse, scorriamo le righe dello sheet
@@ -244,11 +244,12 @@ class DfMaker:
 
                 for k, v in self.ut.tipiSql_nomiCol.items():
                     if self.ut.normalize_str(par) in v and df.at[index, "Tipo"] != k:
-                        columns = list(df.columns)
 
-                        df.at[index, "Tipo"] = k
-                        new_Lunghezza[index] = self.ut.tipiSql_defaultLen[k]
-                        #df.at[index, "Lunghezza"] = self.ut.tipiSql_defaultLen[k]
+                        #Se ho un numeric con decimali e il nome ci indica che dobbiamo cambiare il tipo NON lo cambiamo
+                        if not (row.Tipo == "numeric" and isinstance(row.Lunghezza, list)):
+                            df.at[index, "Tipo"] = k
+                            new_Lunghezza[index] = self.ut.tipiSql_defaultLen[k]
+                            #df.at[index, "Lunghezza"] = self.ut.tipiSql_defaultLen[k]
 
         df["Lunghezza"] = new_Lunghezza
     # Se abbiamo un valore numerci la cui lughezza è indicaata da un solo valore si effettua il cast ad intero

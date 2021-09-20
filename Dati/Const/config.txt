@@ -8,13 +8,13 @@
 
     "AMBITO" : "Gestione Patrimoniali",
 
-    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome"],
-                    "Key": ["chiave"],
+    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name"],
+                    "Key": ["chiave", "key"],
                     "Tipo": ["type", "tipo"],
-                    "Lunghezza": ["note", "formato", "lunghezza", "formatoinput"]
+                    "Lunghezza": ["note", "formato", "lunghezza", "formatoinput", "length", "format"]
     },
 
-    "predict_values" : True,
+    "predict_values" : False,
 
     "tipiSql_nomiTipi" : {
         "varchar": ["character", "alfanumerico"],

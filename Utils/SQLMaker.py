@@ -60,6 +60,8 @@ class SQLMaker:
             if row.Tipo == "varchar":
                 lunghezza = "(" + str(row.Lunghezza) + ") "
             elif row.Tipo == "numeric":
+                if isinstance(row.Lunghezza, int):
+                    row.Lunghezza = [row.Lunghezza, 0]
                 lunghezza = "(" + str(row.Lunghezza[0]) + ", " + str(row.Lunghezza[1]) + ") "
             else:
                 lunghezza = ""

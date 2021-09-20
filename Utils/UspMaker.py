@@ -27,6 +27,10 @@ class UspMaker:
         elif row.Tipo == "bit":
             str_med = "[" + row.NomeColonna + "] as bit"
         else:
+
+            if isinstance(row.Lunghezza, int):
+                row.Lunghezza = [row.Lunghezza, 0]
+
             str_med = "REPLACE([" + row.NomeColonna + "], ',', '.') as NUMERIC (" + str(
                 int(row.Lunghezza[0]) + int(row.Lunghezza[1])) + "," + str(row.Lunghezza[1]) + ")"
         return str_init + str_med + str_end
