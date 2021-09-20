@@ -1,0 +1,50 @@
+{
+    "INPUT_NAME" : "Flussi_GP.xlsx",
+    "INPUT_PATH" : "Dati/input",
+
+    "OUTPUT_PATH" : "Dati/output",
+
+    "sheet_to_do" : ["Foglio1"],
+
+    "AMBITO" : "Gestione Patrimoniali",
+
+    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome"],
+                    "Key": ["chiave"],
+                    "Tipo": ["type", "tipo"],
+                    "Lunghezza": ["note", "formato", "lunghezza", "formatoinput"]
+    },
+
+    "predict_values" : True,
+
+    "tipiSql_nomiTipi" : {
+        "varchar": ["character", "alfanumerico"],
+        "int": ["integer"],
+        "numeric": ["numeric", "numerico"],
+        "date": ["date", "data"],
+        "bit": ["bit"]
+    },
+
+    "tipiSql_nomiCol" : {
+        "int" : ["num", "n_", ],
+        "bit" : ["flg", "flag"],
+        "numeric" : ["imp"],
+        "date" : ["TMP", "date", "data", "dat"]
+    },
+
+
+    "DEFAULT_VARCHAR_LEN" : 255,
+    "DEFAULT_NUMERIC_LEN" : [20, 2],
+    "DEFAULT_DATE_LEN" : 10,
+    "DEFAULT_INT_LEN" : 8,
+
+    "tipiSql_defaultLen" : {
+        "int" : 8,
+        "bit" : 8,
+        "numeric" : [20, 2],
+        "date" : 10,
+        "varchar" : 255
+    },
+
+    "NomiCella_ConNome_Tabella" : ["file:"]
+
+}
