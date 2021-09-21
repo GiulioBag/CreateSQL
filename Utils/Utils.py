@@ -18,7 +18,7 @@ class Utils:
 
         self.codifica_data = var_dict["CODIFICA_DATA"]
 
-        self.sheet_to_do = var_dict["sheet_to_do"]
+        #self.sheet_to_do = var_dict["sheet_to_do"]
 
         self.data_ExcelCols = var_dict["data_ExcelCols"]
 

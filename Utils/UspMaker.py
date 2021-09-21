@@ -6,6 +6,7 @@ class UspMaker:
     def __init__(self, ut):
         
         self.ut = ut
+        self.sqlQuery = ""
         
         
     def get_table_name(self, table_name):
@@ -408,3 +409,5 @@ class UspMaker:
         sql_query += self.catch_ex()
 
         self.ut.write_sql_query(sql_query, table_name, "usp_Load_" + self.get_table_name(table_name) + ".sql")
+        self.sqlQuery += "\n\n\n --Procedura per creare la Load usp \n" + sql_query
+

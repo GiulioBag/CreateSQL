@@ -42,6 +42,8 @@ if __name__ == '__main__':
                     sqlm.create_L1()
                     sqlm.view_builder()
                     sqlm.uspMaker.create_usp(table_info, table_name)
+                    flusso = "_".join(table_name.split(" "))
+                    ut.write_sql_query(sqlm.sqlQuery + sqlm.uspMaker.sqlQuery, flusso, "wholeProcedure.sql")
 
                 except Exception as e:
                     print(

@@ -9,6 +9,7 @@ class SQLMaker:
         self.table_info = table_info
         self.table_name = table_name
         self.uspMaker = UspMaker(ut)
+        self.sqlQuery = ""
 
 
 
@@ -37,6 +38,8 @@ class SQLMaker:
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_L0_" + flusso + ".sql")
 
+        self.sqlQuery += " -- Procedura per creare L0\n" +  sql_query
+
     def create_L0_SCARTI(self):
         sql_query = self.create_table("L0_SCARTI")
 
@@ -54,6 +57,8 @@ class SQLMaker:
 
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_L0_SCARTI_" + flusso + ".sql")
+
+        self.sqlQuery += "\n\n\n --Procedura per creare L0 SCARTI \n" + sql_query
 
     def create_L1(self):
         sql_query = self.create_table("L1") + "\t\t"
@@ -91,6 +96,8 @@ class SQLMaker:
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_L1_" + flusso + ".sql")
 
+        self.sqlQuery += "\n\n\n --Procedura per creare L1 \n" + sql_query
+
     def create_view_from(self, schema):
         aux_name = "_".join(self.table_name.split(" "))
         return "CREATE VIEW [" + schema + "].[V_" + self.ut.ambito + "_" + aux_name + "]\t AS", "FROM [" + schema + "].[T_" + self.ut.ambito + "_" + aux_name + "] as [r] "
@@ -105,3 +112,4 @@ class SQLMaker:
 
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_VIEW_" + flusso + ".sql")
+        self.sqlQuery += "\n\n\n --Procedura per creare la vista \n" + sql_query

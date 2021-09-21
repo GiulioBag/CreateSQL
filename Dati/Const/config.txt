@@ -1,12 +1,7 @@
 {
-    "INPUT_NAME" : "Flussi_GP.xlsx",
     "INPUT_PATH" : "Dati/input",
 
     "OUTPUT_PATH" : "Dati/output",
-
-    "sheet_to_do" : ["Foglio1"],
-
-    "AMBITO" : "Gestione Patrimoniali",
 
     "CODIFICA_DATA": "106",
 
