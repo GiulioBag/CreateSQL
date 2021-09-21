@@ -10,11 +10,14 @@ class UspMaker:
         
     def get_table_name(self, table_name):
         return "T_" + self.ut.ambito + "_" + table_name
-    
-    
+
     # dtae = [nome tabella (se serve)].[nome colonna]
     def conv_date(self, date):
-        return " TRY_CONVERT (date, stuff(stuff(" + date + ", 6, 0, ' '), 3, 0, ' '), 106)"
+        if self.ut.codifica_data == "106":
+            return " TRY_CONVERT (date, stuff(stuff(" + date + ", 6, 0, ' '), 3, 0, ' '), "+ self.ut.codifica_data +")"
+        else:
+            return " TRY_CONVERT (date," + date + ", " + self.ut.codifica_data + ")"
+
     def conv_numeric(self, row, isNull=True):
         str_init = "TRY_CAST("
         if isNull:

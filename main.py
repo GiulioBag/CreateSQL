@@ -28,22 +28,22 @@ if __name__ == '__main__':
             xls_sheet_name = xls.sheet_names
             for sheet_name in xls_sheet_name:
                 ut.sheet_name = sheet_name
-                #try:
-                df = pd.read_excel(xls, sheet_name, dtype=object)
-                df = df.where(~ pd.isna(df), None)
-                table_name = ut.get_table_name(df, sheet_name)
+                try:
+                    df = pd.read_excel(xls, sheet_name, dtype=object)
+                    df = df.where(~ pd.isna(df), None)
+                    table_name = ut.get_table_name(df, sheet_name)
 
-                dfm = DfMaker(ut=ut, excel_sheet=df)
-                table_info = dfm.get_info()
+                    dfm = DfMaker(ut=ut, excel_sheet=df)
+                    table_info = dfm.get_info()
 
-                sqlm = SQLMaker(ut=ut, table_info=table_info, table_name=table_name)
-                sqlm.create_L0()
-                sqlm.create_L0_SCARTI()
-                sqlm.create_L1()
-                sqlm.view_builder()
-                sqlm.uspMaker.create_usp(table_info, table_name)
+                    sqlm = SQLMaker(ut=ut, table_info=table_info, table_name=table_name)
+                    sqlm.create_L0()
+                    sqlm.create_L0_SCARTI()
+                    sqlm.create_L1()
+                    sqlm.view_builder()
+                    sqlm.uspMaker.create_usp(table_info, table_name)
 
-
-                # except Exception as e:
-                #     print("Durante l'elaborazione del foglio: \"" + sheet_name  + "\" la seguente eccezione è stata lanciata: ")
-                #     print("\t---> " + str(e))
+                except Exception as e:
+                    print(
+                        "Durante l'elaborazione del foglio: \"" + sheet_name + "\" la seguente eccezione è stata lanciata: ")
+                    print("\t---> " + str(e))

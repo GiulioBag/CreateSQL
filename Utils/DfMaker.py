@@ -29,7 +29,7 @@ class DfMaker:
         if self.ut.predict_values:
             df_to_return = self.predict_values(df_to_return)
 
-        df_to_return.to_csv(self.ut.output_path + "\df.csv", index=False)
+        #df_to_return.to_csv(self.ut.output_path + "\df.csv", index=False)
 
         new_names = list(df_to_return.NomeColonna)
         df_to_return.NomeColonna = [nome.replace(" ", "_") for nome in new_names]
@@ -101,7 +101,7 @@ class DfMaker:
 
     def get_rows(self, df: pd.DataFrame):
         """
-        Esclude le righe in cui manca il campo "Nome Colonna" (controlla eventualemnte che vi siano pià campi con
+        Esclude le righe in cui manca il campo "Nome Colonna" (controlla eventualemnte che vi siano più campi con
         questo nome).
         Mappa i valori nei codici da usare nel SQL
         :param df:
@@ -228,11 +228,11 @@ class DfMaker:
 
     # Divido il nome della colonna, se questo contiene parole che possono farci pensare che appartiene ad un altro tipo
     # setto quest'ultimo modificando anche la sua lunghezza
-
         new_Lunghezza = []
         for ele in list(df.Lunghezza):
             if not isinstance(ele, list) and pd.isna(ele):
                 new_Lunghezza.append(ele)
+
             elif isinstance(ele, list):
                 new_Lunghezza.append([int(ele[0]), int(ele[1])])
             else:
@@ -240,6 +240,7 @@ class DfMaker:
 
         for index, row in df.iterrows():
             name = row.NomeColonna
+
             for par in "_".join(name.split(" ")).split("_"):
 
                 for k, v in self.ut.tipiSql_nomiCol.items():
@@ -252,11 +253,10 @@ class DfMaker:
                             #df.at[index, "Lunghezza"] = self.ut.tipiSql_defaultLen[k]
 
         df["Lunghezza"] = new_Lunghezza
-    # Se abbiamo un valore numerci la cui lughezza è indicaata da un solo valore si effettua il cast ad intero
+    # Se abbiamo un valore numerci la cui lughezza è indicata da un solo valore si effettua il cast ad intero
         for index, row in df.iterrows():
             if row.Tipo == "numeric" and not isinstance(row.Lunghezza, list):
                 df.at[index, "Tipo"] = "int"
 
 
         return df
-

@@ -8,6 +8,8 @@
 
     "AMBITO" : "Gestione Patrimoniali",
 
+    "CODIFICA_DATA": "106",
+
     "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name"],
                     "Key": ["chiave", "key"],
                     "Tipo": ["type", "tipo"],

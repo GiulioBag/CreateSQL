@@ -10,6 +10,8 @@ class SQLMaker:
         self.table_name = table_name
         self.uspMaker = UspMaker(ut)
 
+
+
     def create_table(self, schema):
 
         aux_name = "_".join(self.table_name.split(" "))
@@ -22,6 +24,7 @@ class SQLMaker:
         for _, row in self.table_info.iterrows():
             if isinstance(row.Lunghezza, int):
                 lunghezza = row.Lunghezza
+
             elif isinstance(row.Lunghezza, list):
                 lunghezza = int(row.Lunghezza[0]) + int(row.Lunghezza[1])
             else:
