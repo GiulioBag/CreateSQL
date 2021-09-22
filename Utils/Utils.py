@@ -4,9 +4,10 @@ import re
 
 class Utils:
 
-    def __init__(self, path="Dati//Const"):
+    def __init__(self, path="Dati//Const", log ="Dati/LOG.txt"):
         var_dict = self.read_file(path)
-        
+        self.log_file = open(log, "a")
+
         self.output_path = var_dict["OUTPUT_PATH"]
         self.input_path = var_dict["INPUT_PATH"]
 
@@ -94,6 +95,75 @@ class Utils:
                     name = columns[i + 1]
                     return name.split(".")[0].replace(" ", "_")
             # TODO Se il nome della tabella non è nella prima riga
+
+    def log(self, log_type, attrs = ""):
+        log = ""
+        if log_type == "init":
+            log += ("".center(100, "_") + "\n")*2
+            log += "*** START ***".center(100) + "\n"
+            log += ("AMBITO = " + attrs[0]).center(100) + "\n"
+            log += ("SHEET = " + attrs[1]).center(100) + "\n"
+
+        elif log_type == "excel":
+            log += ("".center(100, "_") + "\n")*2
+            log += "*** READING EXCEL START ***".center(100) + "\n" * 2
+            log += (str(attrs)).center(100) + "\n" * 2
+            log += "*** READING EXCEL END ***".center(100) + "\n"
+
+        elif log_type == "df_maker_col":
+            log += "".center(100, "_") + "\n"
+            log += "*** DF MAKER PROCEDURE START ***".center(100) + "\n" * 2
+            log += "\n"+("-MULTIPLE COLUMNS-").center(100) + "\n"
+
+        elif log_type == "multicol":
+            log += attrs[0] + " = " + attrs[1] + "_" + str(attrs[2]) + " \n"
+
+        elif log_type == "df_maker_type":
+            log += "\n"+("-TYPE MAPPING-").center(100) + "\n"
+
+        elif log_type == "type":
+            log += (attrs[0] +" [" + attrs[1] + "] >> [" + attrs[2] + "]\n")
+
+        elif log_type == "drop":
+            log += "\n"+("-DROP COLUMNS-").center(100) + "\n"
+            log += str(attrs) + "\n"
+
+        elif log_type == "df_len":
+            log += "\n"+("-LEN MAPPING-").center(100) + "\n"
+
+        elif log_type == "len":
+            log += attrs[0] + str(attrs[1]) + " >> " + attrs[2] + "\n"
+
+        elif log_type == "df_pred":
+            log += "\n" + ("-PREDICTION TYPE-").center(100) + "\n"
+
+        elif log_type == "pred":
+            log += str(attrs[0]) + "[" + str(attrs[1]) +"] >> ["+ attrs[2] + "]\n"
+
+        elif log_type == "df_reader":
+            log += "\n\n"+(str(attrs)).center(100) + "\n"
+            log += "*** DF MAKER PROCEDURE END ***".center(100) + "\n"
+
+
+        elif log_type == "SQL_writer":
+            log += ("".center(100, "_") + "\n")
+            log += "*** WRITING SQL QUERY START ***".center(100) + "\n"
+
+
+        elif log_type == "save_procedure":
+            log += "*** WRITING SQL QUERY END ***".center(100) + "\n"
+            log += ("".center(100, "_") + "\n")
+            log += "*** EXPORT SQL QUERY ***".center(100) + "\n"
+
+        elif log_type == "end":
+            log += ("".center(100, "_") + "\n")*2
+            log += "*** END ***".center(100) + "\n"
+            log += ("AMBITO = " + attrs[0]).center(100) + "\n"
+            log += ("SHEET = " + attrs[1]).center(100) + "\n"
+            log += ("".center(100, "_") + "\n")*2
+
+        self.log_file.write(log)
+
 
 
 

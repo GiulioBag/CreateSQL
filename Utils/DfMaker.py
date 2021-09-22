@@ -10,6 +10,7 @@ class DfMaker:
         self.excel_sheet = excel_sheet
 
     def get_info(self):
+
         """
         Elimina le colonne e le righe dal foglio excel non utili
         :return: un df contenente solo le info utili
@@ -33,6 +34,8 @@ class DfMaker:
 
         new_names = list(df_to_return.NomeColonna)
         df_to_return.NomeColonna = [nome.replace(" ", "_") for nome in new_names]
+
+
 
         return df_to_return
 
@@ -60,6 +63,7 @@ class DfMaker:
         raise Exception("Non è stato possibile trovare le colonne corrette nel file " + self.ut.input_name + " nel foglio: " + self.ut.sheet_name)
 
     def check_columns(self):
+        self.ut.log("df_maker_col")
         """
             Controllo che le colonne siano quelle volute.
             Per farlo scorro ut.data_ExcelCols e segno tutte le volte che ho trovato una nuova colonna.
@@ -70,7 +74,7 @@ class DfMaker:
                     Caso Negativo: -1, None
         """
 
-        df_to_return = pd.DataFrame()
+        df_to_return = pd.DataFrame(dtype=object)
         # Conterrà come chiave il nome vero trovato e come valore la lista dei possibili nomi del foglio che matchano
         count_dict = dict()
 
@@ -91,15 +95,20 @@ class DfMaker:
             # Devo controllare se fare la merge o meno
             for k, v in count_dict.items():
                 if len(v) != 1:
+
                     for it, excel_column_name in enumerate(v):
                         # Mi salvo tutte le colonne doppioni cambiandone il nome
                         df_to_return[k + "_" + str(it)] = list(self.excel_sheet[excel_column_name])
+
+                        self.ut.log("multicol", [excel_column_name, k, it])
                 else:
                     df_to_return[k] = list(self.excel_sheet[v[0]])
             return 0, df_to_return
         return -1, None
 
     def get_rows(self, df: pd.DataFrame):
+        self.ut.log("df_maker_type")
+
         """
         Esclude le righe in cui manca il campo "Nome Colonna" (controlla eventualemnte che vi siano più campi con
         questo nome).
@@ -143,22 +152,26 @@ class DfMaker:
                         df.at[index, col] = int(values[0])
                     # E' un numeric
                     else:
-                        df.at[index, col] = [int(values[0]), int(values[1])]
+                         df.at[index, col] = [int(values[0]), int(values[1])]
 
                 if real_col_name == "Tipo":
+
                     new_tipo = None
                     for k, v in self.ut.tipiSql_nomiTipi.items():
                         if self.ut.normalize_str(str(row[col])) in v:
                             new_tipo = k
                             break
-
+                    self.ut.log("type", [row.NomeColonna, row.Tipo, new_tipo])
                     df.at[index, col] = new_tipo
 
         if len(index_to_drop) != 0:
             df = df.drop(index_to_drop)
+            self.ut.log("drop", index_to_drop)
         return df
 
     def merge_columns(self, df: pd.DataFrame):
+        self.ut.log("df_len")
+
         """
         Partendo dai nomi delle colonne del df determina il volaro di una nuova colonna, a seconda della colonna di
         destinazione sono usate logiche diverse:
@@ -174,8 +187,7 @@ class DfMaker:
         :param df:
         :return: Una lista contenente i valori veri
         """
-        df_to_return = pd.DataFrame()
-
+        df_to_return = pd.DataFrame(dtype=object)
 
         for real_col_name in self.ut.data_ExcelCols.keys():
 
@@ -188,7 +200,7 @@ class DfMaker:
 
            # Gestione della real_col Lunghezza
             elif real_col_name == "Lunghezza":
-                for _, row in df.iterrows():
+                for index, row in df.iterrows():
                     values = [row["Lunghezza_" + str(i)] for i in range(num_col)]
 
                     # Controllo che via sia un solo valore
@@ -209,6 +221,9 @@ class DfMaker:
                             # Caso in cui ho più di una lista, prendo la lista che alloca più spazio
                             spaces = [l[0] for l in lists]
                             vals_to_col.append(lists[spaces.index(max(spaces))])
+
+                    self.ut.log("len", [row.NomeColonna, str(values), str(vals_to_col[index])])
+
             #Gestione altre real_col
             else:
                 for index, row in df.iterrows():
@@ -220,12 +235,14 @@ class DfMaker:
                     else:
                         raise Exception("Per la colonna: " + real_col_name + " alla riga: " + str(index) + " sono presenti più valori validi")
 
+
+
             df_to_return[real_col_name] = vals_to_col
 
         return  df_to_return
 
     def predict_values(self, df):
-
+        self.ut.log("df_pred")
     # Divido il nome della colonna, se questo contiene parole che possono farci pensare che appartiene ad un altro tipo
     # setto quest'ultimo modificando anche la sua lunghezza
         new_Lunghezza = []
@@ -248,14 +265,17 @@ class DfMaker:
 
                         #Se ho un numeric con decimali e il nome ci indica che dobbiamo cambiare il tipo NON lo cambiamo
                         if not (row.Tipo == "numeric" and isinstance(row.Lunghezza, list)):
+                            self.ut.log("pred", [row.NomeColonna, row.Tipo, k])
                             df.at[index, "Tipo"] = k
                             new_Lunghezza[index] = self.ut.tipiSql_defaultLen[k]
+
                             #df.at[index, "Lunghezza"] = self.ut.tipiSql_defaultLen[k]
 
         df["Lunghezza"] = new_Lunghezza
     # Se abbiamo un valore numerci la cui lughezza è indicata da un solo valore si effettua il cast ad intero
         for index, row in df.iterrows():
             if row.Tipo == "numeric" and not isinstance(row.Lunghezza, list):
+                self.ut.log("pred", [row.NomeColonna, row.Tipo, "int"])
                 df.at[index, "Tipo"] = "int"
 
 

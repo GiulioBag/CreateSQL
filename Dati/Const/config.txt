@@ -11,7 +11,7 @@
                     "Lunghezza": ["note", "formato", "lunghezza", "formatoinput", "length", "format"]
     },
 
-    "predict_values" : False,
+    "predict_values" : True,
 
     "tipiSql_nomiTipi" : {
         "varchar": ["character", "alfanumerico"],
