@@ -304,10 +304,10 @@ class UspMaker:
 
         columns = [",[" + str(NomeColonna) + "]" for NomeColonna in info.NomeColonna]
         columns[0] = columns[0][1:]
-        sql_query += self.ut.concat_strs(1, 2, columns + [",[flag_altra_pol]", ",[Row_Id]", ",[Exec_Id]", ",[Bitmask_Scarti])"])
+        sql_query += self.ut.concat_strs(1, 2, columns + [",[Row_Id]", ",[Exec_Id]", ",[Bitmask_Scarti])"])
 
         sql_query += self.ut.concat_strs(1, 1, ["select"])
-        sql_query += self.ut.concat_strs(1, 2, columns + [",[flag_altra_pol]", ",[Row_Id]", ",[Exec_Id]", ",[Bitmask_Scarti]"])
+        sql_query += self.ut.concat_strs(1, 2, columns + [",[Row_Id]", ",[Exec_Id]", ",[Bitmask_Scarti]"])
 
         sql_query += self.ut.concat_strs(1, 1, ["FROM [L0].[" + self.get_table_name(table_name) + "]", "WHERE [Exec_Id] = @Exec_Id",
                                         "AND  [BitMask_Scarti] <> 0", ";"])
