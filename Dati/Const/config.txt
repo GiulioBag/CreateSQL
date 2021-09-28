@@ -3,7 +3,7 @@
 
     "OUTPUT_PATH" : "Dati/output",
 
-    "CODIFICA_DATA": "106",
+    "CODIFICA_DATA": "106 + left",
 
     "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name"],
                     "Key": ["chiave", "key"],

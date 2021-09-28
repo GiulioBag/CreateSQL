@@ -96,7 +96,7 @@ class SQLMaker:
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_L1_" + flusso + ".sql")
 
-        self.sqlQuery += "\n\n\n --Procedura per creare L1 \n" + sql_query
+        self.sqlQuery += "\n\n\n --Procedura per creare L1 \n" + sql_query + "\nGO"
 
     def create_view_from(self, schema):
         aux_name = "_".join(self.table_name.split(" "))
@@ -112,4 +112,4 @@ class SQLMaker:
 
         flusso = "_".join(self.table_name.split(" "))
         self.ut.write_sql_query(sql_query, flusso, "create_VIEW_" + flusso + ".sql")
-        self.sqlQuery += "\n\n\n --Procedura per creare la vista \n" + sql_query
+        self.sqlQuery += "\n\n\n --Procedura per creare la vista \n" + sql_query + "\nGO"

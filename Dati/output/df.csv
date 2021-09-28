@@ -1,8 +1,0 @@
-NomeColonna,Key,Tipo,Lunghezza
-COD_ABI,False,varchar,5
-COD_CONTRATTO,False,varchar,34
-COD_MANDATO,False,varchar,5
-ANNO_MESE_SALDO,False,numeric,8
-IMP_SALDO_GP,False,numeric,"[20, 3]"
-PRC_RENDIMENTO_ANNUALIZZATO,False,numeric,"[17, 9]"
-PRC_RENDIMENTO_ANNUO,False,numeric,"[17, 9]"

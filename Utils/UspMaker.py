@@ -16,6 +16,8 @@ class UspMaker:
     def conv_date(self, date):
         if self.ut.codifica_data == "106":
             return " TRY_CONVERT (date, stuff(stuff(" + date + ", 6, 0, ' '), 3, 0, ' '), "+ self.ut.codifica_data +")"
+        elif self.ut.codifica_data == "106 + left":
+            return " TRY_CONVERT (date, stuff(stuff(LEFT(" + date + ", 9), 6, 0, ' '), 3, 0, ' '), " + self.ut.codifica_data.split(" ")[0] + ")"
         else:
             return " TRY_CONVERT (date," + date + ", " + self.ut.codifica_data + ")"
 
@@ -43,9 +45,9 @@ class UspMaker:
         if row.Tipo == "varchar":
             return ",[" + row.NomeColonna + "]"
         elif row.Tipo == "date":
-            return "," + self.conv_date("[" + row.NomeColonna + "]")[1:]
+            return "," + self.conv_date("[" + row.NomeColonna + "]")[1:] + "as [" + row.NomeColonna + "]"
         elif row.Tipo in ["bit", "int", "numeric"]:
-            return "," + self.conv_numeric(row, False)
+            return "," + self.conv_numeric(row, False) + "as [" + row.NomeColonna + "]"
         else:
             return ",[" + row.NomeColonna + "]"
 
@@ -286,7 +288,7 @@ class UspMaker:
                                         "AND [scarti].[ID_Flusso] = @ID_Flusso", "AND [scarti].[Flag_Enabled] = 1",
                                         "AND ("])
 
-        numerics = ["OR ([sn].[" + str(row.NomeColonna) + "] is NOT null AND " + self.conv_numeric(row) + ")" for _, row in
+        numerics = ["OR ([sn].[" + str(row.NomeColonna) + "] is NOT null AND " + self.conv_numeric(row) for _, row in
                     info.loc[info["Tipo"].isin(["numeric", "bit", "int"])].iterrows()]
         numerics[0] = numerics[0][3:]
         sql_query += self.ut.concat_strs(1, 3, [
