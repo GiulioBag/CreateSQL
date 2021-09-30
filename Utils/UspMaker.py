@@ -149,7 +149,7 @@ class UspMaker:
             keys = ["Inserire qui le chiavi nella forma [r].[key]"]
         sql_query += self.ut.concat_strs(1, 3, keys + [",[r].[Row_Id]", ",[r].[Exec_Id]", ",ROW_NUMBER() OVER("])
 
-        sql_query += self.ut.concat_strs(1, 3, ["PARTIOTION BY"])
+        sql_query += self.ut.concat_strs(1, 3, ["PARTITION BY"])
 
         if len(info.loc[info["Key"]]) != 0:
             keys = [",[r].[" + str(name_col) + "]" for name_col in info.loc[info["Key"]].NomeColonna]
@@ -159,7 +159,7 @@ class UspMaker:
             sql_query += self.ut.concat_strs(1, 5, ["Inserire qui le chiavi nella forma [r].[key]"])
 
         sql_query += self.ut.concat_strs(1, 4, ["ORDER BY"])
-        sql_query += self.ut.concat_strs(1, 5, ["[r].[Row_Id] ASC", ",[r].[Exec_Id] ASC]"])
+        sql_query += self.ut.concat_strs(1, 5, ["[r].[Row_Id] ASC", ",[r].[Exec_Id] ASC"])
 
         sql_query += self.ut.concat_strs(1, 2, [") as [rn]", "FROM [L0].[" + self.get_table_name(table_name) + "] [r]",
                                         "WHERE [Exec_Id] = @Exec_Id"])
@@ -175,7 +175,7 @@ class UspMaker:
         sql_query += self.ut.concat_strs(1, 3,
                                  keys + ["AND [sn].[Row_Id] = [sn2].[Row_Id]", "AND [sn].[Exec_Id] = [sn2].[Exec_Id]"])
 
-        sql_query += self.ut.concat_strs(1, 1, keys + ["CROSS JOIN [L0_SCARTI].[T_Desc_Scarti] [scarti]",
+        sql_query += self.ut.concat_strs(1, 1,  ["CROSS JOIN [L0_SCARTI].[T_Desc_Scarti] [scarti]",
                                                "WHERE [sn].[Exec_Id] = @Exec_Id"])
 
         sql_query += self.ut.concat_strs(1, 2, ["AND [scarti].[Cod_Scarto] = 'GET_ONE_DUPLICATE_KEY' --Codice d'errore",

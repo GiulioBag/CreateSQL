@@ -8,21 +8,21 @@
     "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name"],
                     "Key": ["chiave", "key"],
                     "Tipo": ["type", "tipo"],
-                    "Lunghezza": ["note", "formato", "lunghezza", "formatoinput", "length", "format"]
+                    "Lunghezza": [ "formato", "lunghezza", "formatoinput", "length", "format"]
     },
 
     "predict_values" : True,
 
     "tipiSql_nomiTipi" : {
         "varchar": ["character", "alfanumerico"],
-        "int": ["integer"],
+        "int": ["integer", "int"],
         "numeric": ["numeric", "numerico"],
         "date": ["date", "data"],
         "bit": ["bit"]
     },
 
     "tipiSql_nomiCol" : {
-        "int" : ["num", "n_", ],
+        "int" : ["num", "n_"],
         "bit" : ["flg", "flag"],
         "numeric" : ["imp"],
         "date" : ["TMP", "date", "data", "dat"]

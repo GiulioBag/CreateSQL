@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
                     ut.write_sql_query(sqlm.sqlQuery + sqlm.uspMaker.sqlQuery, flusso, "wholeProcedure.sql")
 
-                    ut.log("end",[ambito, sheet_name])
+                    ut.log("end", [ambito, sheet_name])
 
                 except Exception as e:
                     print(

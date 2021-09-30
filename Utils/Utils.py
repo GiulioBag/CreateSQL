@@ -4,7 +4,7 @@ import re
 
 class Utils:
 
-    def __init__(self, path="Dati//Const", log ="Dati/LOG.txt"):
+    def __init__(self, path="Dati//Const", log="Dati/LOG.txt"):
         var_dict = self.read_file(path)
         self.log_file = open(log, "a")
 
@@ -122,7 +122,7 @@ class Utils:
             log += "\n"+("-TYPE MAPPING-").center(100) + "\n"
 
         elif log_type == "type":
-            log += (attrs[0] +" [" + attrs[1] + "] >> [" + attrs[2] + "]\n")
+            log += (str(attrs[0]) +" [" + str(attrs[1]) + "] >> [" + str(attrs[2]) + "]\n")
 
         elif log_type == "drop":
             log += "\n"+("-DROP COLUMNS-").center(100) + "\n"
