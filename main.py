@@ -9,6 +9,7 @@ if __name__ == '__main__':
     ut = Utils()
 
     ambiti = os.listdir(ut.input_path)
+    fogli_corretti = []
 
     for ambito in ambiti:
 
@@ -60,10 +61,13 @@ if __name__ == '__main__':
                     ut.write_sql_query(sqlm.sqlQuery + sqlm.uspMaker.sqlQuery, flusso, "wholeProcedure.sql")
 
                     ut.log("end", [ambito, sheet_name])
+                    fogli_corretti.append(sheet_name)
 
                 except Exception as e:
                     print(
                         "Durante l'elaborazione del foglio: \"" + sheet_name + "\" la seguente eccezione è stata lanciata: ")
                     print("\t---> " + str(e))
 
-
+    print("\n\nFogli correttamente stampati: ")
+    for e in fogli_corretti:
+        print("\t" + e)

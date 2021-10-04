@@ -161,7 +161,9 @@ class DfMaker:
                         if self.ut.normalize_str(str(row[col])) in v:
                             new_tipo = k
                             break
+
                     self.ut.log("type", [row.NomeColonna, row.Tipo, new_tipo])
+
                     df.at[index, col] = new_tipo
 
         if len(index_to_drop) != 0:

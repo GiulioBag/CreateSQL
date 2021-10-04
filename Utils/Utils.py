@@ -77,7 +77,7 @@ class Utils:
     def get_table_name(self, df, sheet_name):
         """
         Determina il nome della tabella con la seguente logica:
-            - Se il nome del foglio non rispetta la rege "Sheet\{d}+" usiamo quello
+            - Se il nome del foglio non rispetta la regex "Sheet\{d}+" usiamo quello
             - Se la rispetta cerchiamo all'interno del foglio informazioni sul nome della tabella
         :param df: foglio excel
         :param sheet_name:

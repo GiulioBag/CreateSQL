@@ -5,10 +5,10 @@
 
     "CODIFICA_DATA": "106 + left",
 
-    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name"],
+    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name", "campoflusso"],
                     "Key": ["chiave", "key"],
-                    "Tipo": ["type", "tipo"],
-                    "Lunghezza": [ "formato", "lunghezza", "formatoinput", "length", "format"]
+                    "Tipo": ["type", "tipo", "formato"],
+                    "Lunghezza": ["lunghezza", "formatoinput", "length", "format", "dimensione"]
     },
 
     "predict_values" : True,
