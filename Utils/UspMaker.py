@@ -219,7 +219,7 @@ class UspMaker:
                                        "CROSS JOIN [L0_SCARTI].[T_Desc_Scarti] [scarti]", "where [Exec_Id] = @Exec_Id"])
         sql_query += self.ut.concat_strs(1, 2, ["AND [scarti].[Cod_Scarto] = 'EMPTY_DATE' --Codice d'errore",
                                         "AND [scarti].[ID_Flusso] = @ID_Flusso", "AND [scarti].[Flag_Enabled] = 1",
-                                        "AND ("])
+                                        "--AND ("])
 
         dates = ["--OR ([sn].[" + str(name_col) + "] is null OR [sn].[" + str(name_col) + "] = '')" for name_col in
                  info.loc[info["Tipo"] == "date"].NomeColonna]
@@ -227,7 +227,7 @@ class UspMaker:
         sql_query += self.ut.concat_strs(1, 3, [
             "--Inserire qui in OR tutte le date su cui si vuole effettuare la validazione"] + dates)
 
-        sql_query += self.ut.concat_strs(1, 2, [")"])
+        sql_query += self.ut.concat_strs(1, 2, ["--)"])
         sql_query += self.ut.concat_strs(1, 1, [";"])
 
         return sql_query + " \n" * 2
@@ -264,7 +264,7 @@ class UspMaker:
                                        "CROSS JOIN [L0_SCARTI].[T_Desc_Scarti] [scarti]", "where [Exec_Id] = @Exec_Id"])
         sql_query += self.ut.concat_strs(1, 2, ["AND [scarti].[Cod_Scarto] = 'EMPTY_NUMERIC' --Codice d'errore",
                                         "AND [scarti].[ID_Flusso] = @ID_Flusso", "AND [scarti].[Flag_Enabled] = 1",
-                                        "AND ("])
+                                        "--AND ("])
 
         numerics = ["--OR ([sn].[" + str(name_col) + "] is null )" for name_col in
                     info.loc[info["Tipo"].isin(["numeric", "bit", "int"])].NomeColonna]
@@ -272,7 +272,7 @@ class UspMaker:
         sql_query += self.ut.concat_strs(1, 3, [
             "--Inserire qui in OR tutte le date su cui si vuole effettuare la validazione"] + numerics)
 
-        sql_query += self.ut.concat_strs(1, 2, [")"])
+        sql_query += self.ut.concat_strs(1, 2, ["--)"])
         sql_query += self.ut.concat_strs(1, 1, [";"])
 
         return sql_query + " \n" * 2

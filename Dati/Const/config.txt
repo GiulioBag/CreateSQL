@@ -5,7 +5,7 @@
 
     "CODIFICA_DATA": "106 + left",
 
-    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name", "campoflusso"],
+    "data_ExcelCols" : {"NomeColonna" : ["nomecampo", "nome", "name", "campoflusso", "campo", "NomeColonnaCDM/BFD"],
                     "Key": ["chiave", "key"],
                     "Tipo": ["type", "tipo", "formato"],
                     "Lunghezza": ["lunghezza", "formatoinput", "length", "format", "dimensione"]
@@ -14,11 +14,12 @@
     "predict_values" : True,
 
     "tipiSql_nomiTipi" : {
-        "varchar": ["character", "alfanumerico"],
+        "varchar": ["character", "alfanumerico", "char", "varchar", "stringa", "dt_str"],
         "int": ["integer", "int"],
-        "numeric": ["numeric", "numerico"],
-        "date": ["date", "data"],
-        "bit": ["bit"]
+        "numeric": ["numeric", "numerico", "number", "dt_numeric"],
+        "date": ["date", "data", "dt_dbdate"],
+        "bit": ["bit"],
+        "datetime": ["datetime", "dt_dbtimestamp"]
     },
 
     "tipiSql_nomiCol" : {
