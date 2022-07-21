@@ -33,6 +33,8 @@ class Utils:
 
         self.NomiCella_ConNome_Tabella = var_dict["NomiCella_ConNome_Tabella"]
 
+        self.Flusso_ID = var_dict["Flusso_ID"]
+
     def read_file(self, path):
         """
         Metodo per recuperare i valori delle costanti
@@ -52,6 +54,8 @@ class Utils:
         for name in names:
             path = os.path.join(path, name)
         return path
+
+
     def write_sql_query(self, str_query, flusso, name_file):
         if not os.path.isdir(self.join_paths([self.output_path, self.ambito])):
             os.mkdir(self.join_paths([self.output_path, self.ambito]))

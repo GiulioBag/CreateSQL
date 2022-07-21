@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
                 ut.log("df_reader", table_info)
                 ut.log("SQL_writer")
-                sqlm = SQLMaker(ut=ut, table_info=table_info, table_name=table_name)
+                sqlm = SQLMaker(ut=ut, table_info=table_info, table_name=table_name, ambito=ambito)
                 sqlm.create_L0()
                 sqlm.create_L0_SCARTI()
                 sqlm.create_L1()

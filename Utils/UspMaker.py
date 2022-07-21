@@ -21,6 +21,11 @@ class UspMaker:
         else:
             return " TRY_CONVERT (date," + date + ", " + self.ut.codifica_data + ")"
 
+
+    def conv_datetime(self, date):
+        return " TRY_CONVERT (datetime,stuff(stuff(stuff(LEFT( " + date + ",  22), 10, 1, ' '), 6, 0, ' '), 3, 0, ' '), 113)"
+
+
     def conv_numeric(self, row, isNull=True):
         str_init = "TRY_CAST("
         if isNull:
@@ -45,9 +50,11 @@ class UspMaker:
         if row.Tipo == "varchar":
             return ",[" + row.NomeColonna + "]"
         elif row.Tipo == "date":
-            return "," + self.conv_date("[" + row.NomeColonna + "]")[1:] + "as [" + row.NomeColonna + "]"
+            return "," + self.conv_date("[" + row.NomeColonna + "]")[1:] + " as [" + row.NomeColonna + "]"
+        elif row.Tipo == "datetime":
+            return "," + self.conv_datetime("[" + row.NomeColonna + "]")[1:] + " as [" + row.NomeColonna + "]"
         elif row.Tipo in ["bit", "int", "numeric"]:
-            return "," + self.conv_numeric(row, False) + "as [" + row.NomeColonna + "]"
+            return "," + self.conv_numeric(row, False) + " as [" + row.NomeColonna + "]"
         else:
             return ",[" + row.NomeColonna + "]"
 
@@ -222,8 +229,9 @@ class UspMaker:
                                         "--AND ("])
 
         dates = ["--OR ([sn].[" + str(name_col) + "] is null OR [sn].[" + str(name_col) + "] = '')" for name_col in
-                 info.loc[info["Tipo"] == "date"].NomeColonna]
-        dates[0] = "--" + dates[0][5:]
+                 info.loc[info["Tipo"].isin(["date", "datetime"])].NomeColonna]
+        #dates[0] = len(dates[0]) > 5 if "--" + dates[0][5:] else dates[0]
+        dates [0] = "--" + dates[0][5:]
         sql_query += self.ut.concat_strs(1, 3, [
             "--Inserire qui in OR tutte le date su cui si vuole effettuare la validazione"] + dates)
 
@@ -247,6 +255,12 @@ class UspMaker:
             "OR ([sn].[" + str(name_col) + "] is not null AND [sn].[" + str(name_col) + "]  <> '' AND " + self.conv_date(
                 "[sn].[" + str(name_col) + "]") + " IS NULL)" for name_col in
             info.loc[info["Tipo"] == "date"].NomeColonna]
+
+        dates += [
+            "OR ([sn].[" + str(name_col) + "] is not null AND [sn].[" + str(name_col) + "]  <> '' AND " + self.conv_datetime(
+                "[sn].[" + str(name_col) + "]") + " IS NULL)" for name_col in
+            info.loc[info["Tipo"] == "datetime"].NomeColonna]
+
         dates[0] = dates[0][3:]
         sql_query += self.ut.concat_strs(1, 3, [
             "--Inserire qui in OR tutte le date su cui si vuole effettuare la validazione"] + dates)
@@ -388,7 +402,7 @@ class UspMaker:
         # Controlli sulle date.
         # I controlli che i campi date non sia nulli sono self.ut.commentati
         # Tutte le date non nulle vengono controlalte
-        if len(table_info.loc[table_info["Tipo"] == "date"]) > 0:
+        if len(table_info.loc[table_info["Tipo"].isin(["date", "datetime"])]) > 0:
             sql_query_date = self.EMPTY_DATE_case(table_info, table_name)
             sql_query_date += self.INVALID_DATE_case(table_info, table_name)
             sql_query += sql_query_date
@@ -411,5 +425,5 @@ class UspMaker:
         sql_query += self.catch_ex()
 
         self.ut.write_sql_query(sql_query, table_name, "usp_Load_" + self.get_table_name(table_name) + ".sql")
-        self.sqlQuery += "\n\n\n --Procedura per creare la Load usp \n" + sql_query
+        self.sqlQuery += "\n\n\n --Procedura per creare la Load usp \n" + sql_query + "\nGO"
 
